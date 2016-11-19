@@ -1,0 +1,104 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+h1{
+	color:red;
+}
+.paging_simple_numbers{
+	width: 40%;
+    float: right;
+}
+#table-student_info{
+	width: 50%;
+    display: inline-block;
+}
+.container{
+	padding:20px 0;
+}
+ul#sortable li {
+    list-style: none;
+    display: inline-block;
+    width: 30%;
+    padding: 10px 0;
+	border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);
+	background-color: #eee;
+    background-color: rgba(86,61,124,.15);
+	margin: 10px 7px;
+}
+.header-step-label .glyphicon-remove{
+	font-size:14px;
+	float: right;
+	color: #c70505;
+}
+select.form-control{
+	height:28px;
+	font-size:12px;
+	
+}
+input.form-control{
+	height:28px;
+	font-size:12px;
+}
+#sortable{
+	padding:0;
+}
+.wrapper-group{
+	border: 2px solid #ddd;
+    margin: 10px 0;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+.header-step-label{
+	padding: 5px 10px;
+    background: #015879;
+}
+.header-step-label span,.header-step-label label{
+	color:white;
+}
+
+div.content textarea{
+	background: transparent;
+    border: 0 none;
+    outline: none;
+    box-shadow: 0px 0px;
+	width: 100%;
+	font-size: 15px;
+    color: #a94442;
+	max-width:100%;
+}
+label{
+	font-size:12px;
+}
+.add-button div span{
+	    margin: 0 auto;
+    font-size: 40px;
+    padding-bottom: 0px;
+    color: #015879;
+}
+#data-clone{
+	display:none
+}
+.add-button div{
+	border: none;
+    width: auto;
+    text-align: center;
+}
+#sortable .add-button{
+	    background: transparent;
+    border: none;
+    text-align: center;
+    width: 30%;
+    margin: 0 auto;
+}
+.multi-action-form input{
+	    height: 13px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+div.form-group {
+    margin-bottom: 5px;
+}
