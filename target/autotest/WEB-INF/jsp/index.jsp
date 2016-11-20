@@ -15,6 +15,7 @@
 <spring:url value="/js/main.js" var="mainJs" />
 <spring:url value="/js/bootstrap.min.js" var="bootstrapJs" />
 <spring:url value="/js/jquery-ui.js" var="jqueryuiJs" />
+<spring:url value="/js/jquery.blockUI.js" var="blockuiJs" />
 
 <link href="${mainCss}" rel="stylesheet" />
 <link href="${boottrapCss}" rel="stylesheet" />
@@ -22,10 +23,12 @@
 <script src="${jqueryJs}"></script>
 <script src="${jqueryuiJs}"></script>
 <script src="${datatableJs}"></script>
+<script src="${blockuiJs}"></script>
+
 
  <script src="${bootstrapJs}"></script>
 <script src="${mainJs}"></script>
-<title>Project Interview</title>
+<title>Auto Test</title>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */
     .navbar {
@@ -97,7 +100,10 @@
 	  <div class="alert alert-info" role="alert">
 		  <textarea  >searching with gooogle!!!</textarea>
 		</div>
-		
+		<div class="alert alert-info">
+		<h4><strong>URL site</strong></h4>
+		<input id="url-web" value="https://www.google.com/">
+		</div>
 		<ul id="sortable">
 		  <li class="ui-state-default">
 			<div class="form-group header-step-label">

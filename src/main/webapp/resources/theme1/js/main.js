@@ -86,7 +86,9 @@ jQuery(document).ready(
 						var send = {};
 						//send.lstStep = listStep;
 						 send.lstStep=JSON.stringify(listStep);
-						 send.url="https://www.youtube.com/";
+						 //send.url="https://www.youtube.com/";
+						// send.url="https://www.google.com/";
+						 send.url=$('#url-web').val();
 						// console.log(JSON.parse(listStep))
 						console.log(send)
 						$.ajax({

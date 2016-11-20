@@ -77,10 +77,14 @@ public class HomeController {
 			DesiredCapabilities capability = DesiredCapabilities.firefox();
 
 			FirefoxProfile profile = new FirefoxProfile();
-			profile.setEnableNativeEvents(true);
-
-			capability.setCapability("marionette", false);
-			capability.setCapability(FirefoxDriver.PROFILE, profile);
+//			profile.set
+			profile.setEnableNativeEvents(false);
+//			profile.setPreference("xpinstall.signatures.required", false);
+//			capability.setCapability("marionette", false);
+//			capability.setCapability(FirefoxDriver.PROFILE, profile);
+			capability.setBrowserName("firefox");
+			capability.setPlatform(Platform.WINDOWS);
+			capability.setVersion("3.6");
 			WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
 			// driver.get("https://jqueryui.com/draggable/");
 			// driver.get("https://www.google.com.vn/?gfe_rd=cr&ei=HqGsV-_KCO_C8AeMnoxQ&gws_rd=ssl");
