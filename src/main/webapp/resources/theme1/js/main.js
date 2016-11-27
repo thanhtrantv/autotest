@@ -75,7 +75,7 @@ jQuery(document).ready(
 									step.valueEnter = $li.find(
 											'.value-enter-form').find('input')
 											.val();
-									step.combineMultiAction='Y';
+									step.combineMultiAction='N';
 									if(i==($lis.length-1))
 										step.combineMultiAction='N';
 									console.log(step);
@@ -89,6 +89,8 @@ jQuery(document).ready(
 						 //send.url="https://www.youtube.com/";
 						// send.url="https://www.google.com/";
 						 send.url=$('#url-web').val();
+						 send.ip=$('#ip-computer').val();
+						 send.browser=$('input[name=browser]:checked').val();
 						// console.log(JSON.parse(listStep))
 						console.log(send)
 						$.ajax({

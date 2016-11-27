@@ -89,9 +89,9 @@
 <div class="container-fluid text-center">
   <div class="row content">
     <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
+      <p><a href="#">Test case 2</a></p>
+      <p><a href="#">Test case 3</a></p>
+      <p><a href="#">Test case 4</a></p>
     </div>
     <div class="col-sm-10 text-left">
       <h1>Test case 1 <button type="button" class="btn btn-primary" id="run-testcase">Run</button></h1>
@@ -100,9 +100,27 @@
 	  <div class="alert alert-info" role="alert">
 		  <textarea  >searching with gooogle!!!</textarea>
 		</div>
-		<div class="alert alert-info">
-		<h4><strong>URL site</strong></h4>
-		<input id="url-web" value="https://www.google.com/">
+		<div class="col-md-4">
+			<div class="alert alert-warning">
+				<h4><strong>URL site</strong></h4>
+				<input id="url-web" value="https://www.google.com/">
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="alert alert-warning">
+				<h4><strong>IP Computer</strong></h4>
+				<input id="ip-computer" value="localhost">
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="alert alert-warning">
+				<h4><strong>Browser</strong></h4>
+				<form>
+				<input name="browser" type="radio" value="IE">Internet Explore</br>
+				<input name="browser" type="radio" value="chrome">Chrome</br>
+				<input name="browser" type="radio" value="firefox" checked>Firefox</br>
+				</form>
+			</div>
 		</div>
 		<ul id="sortable">
 		  <li class="ui-state-default">
@@ -217,9 +235,9 @@
 							
 							<div class="col-sm-9"> 
 								<select class="form-control"> 
-									<option value="CSS"  selected="selected" title="find element By CSS">By CSS</option> 
+									<option value="CSS"  title="find element By CSS">By CSS</option> 
 									<option value="XPath" title="find element By XPath">By XPath</option> 
-									<option value="Name" title="find element By Name">By Name</option> 
+									<option value="Name" selected="selected"  title="find element By Name">By Name</option> 
 									<option value="ID" title="find element By Id">By Id</option> 
 								</select>
 							</div> 
@@ -227,7 +245,7 @@
 						<div class="form-group form-group-md element-define-form"> 
 							<label class="col-sm-3 control-label" for="formGroupInputSmall" >Element define</label> 
 							<div class="col-sm-9"> 
-								<input class="form-control" id="formGroupInputSmall" placeholder="Element define by ..." value="#sblsbb button"> 
+								<input class="form-control" id="formGroupInputSmall" placeholder="Element define by ..." value="btnG"> 
 							</div> 
 					</div>
 						

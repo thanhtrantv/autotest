@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -15,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -64,45 +66,55 @@ public class HomeController {
 
 	}
 
+	private WebDriver generateWebdriver(String ipAddress, String browser) {
+		DesiredCapabilities capability = null;
+		WebDriver driver = null;
+		try {
+			if (browser.equals("firefox")) {
+				capability = DesiredCapabilities.firefox();
+				capability.setCapability("marionette", false);
+				capability.setBrowserName("firefox");
+				capability.setPlatform(Platform.VISTA);
+				capability.setVersion("3.6");
+				driver = new RemoteWebDriver(new URL("http://" + ipAddress + ":4444/wd/hub"), capability);
+				driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			} else if (browser.equals("chrome")) { /* Chrome */
+				capability = DesiredCapabilities.chrome();
+				driver = new RemoteWebDriver(new URL("http://" + ipAddress + ":4444/wd/hub"), capability);
+				driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			} else if (browser.equals("IE")) {
+				capability = DesiredCapabilities.internetExplorer();
+				System.setProperty("webdriver.ie.driver",
+						System.getProperty("webdriver.ie.driver", "D:/java/autotest/IEDriverServer.exe"));
+				capability.setCapability("initialBrowserUrl", "https://localhost:9443");
+				capability.setCapability("marionette", false);
+				driver = new RemoteWebDriver(new URL("http://" + ipAddress + ":4444/wd/hub"), capability);
+				driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			} else {
+				System.out.println("Not able to set Driver object");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return driver;
+	}
+
 	@ResponseBody
 	@RequestMapping(value = "runTestcase", method = RequestMethod.GET)
-	public String runTestcase(@RequestParam("lstStep") String stepStr,@RequestParam("url") String url)
+	public String runTestcase(@RequestParam("lstStep") String stepStr, @RequestParam("url") String url,
+			@RequestParam("ip") String ip, @RequestParam("browser") String browser)
 			throws JsonParseException, JsonMappingException, IOException {
 		try {
-			System.out.println("runtestcase!!!!!!!!!!!!!" + stepStr);
-			// List<StepTestCase> lstStep=new ArrayList<StepTestCase>();
+			System.out.println("IP:"+ip + "    data:" + stepStr);
 			ObjectMapper mapper = new ObjectMapper();
 			List<StepTestCase> lstStep = mapper.readValue(stepStr, new TypeReference<List<StepTestCase>>() {
 			});
-			DesiredCapabilities capability = DesiredCapabilities.firefox();
-
-			FirefoxProfile profile = new FirefoxProfile();
-//			profile.set
-			profile.setEnableNativeEvents(false);
-//			profile.setPreference("xpinstall.signatures.required", false);
-//			capability.setCapability("marionette", false);
-//			capability.setCapability(FirefoxDriver.PROFILE, profile);
-			capability.setBrowserName("firefox");
-			capability.setPlatform(Platform.WINDOWS);
-			capability.setVersion("3.6");
-			WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
-			// driver.get("https://jqueryui.com/draggable/");
-			// driver.get("https://www.google.com.vn/?gfe_rd=cr&ei=HqGsV-_KCO_C8AeMnoxQ&gws_rd=ssl");
-			// driver.get("http://www.w3schools.com/html/html5_draganddrop.asp");
-			 driver.get(url);
-//			driver.get("http://jqueryui.com/resources/demos/droppable/default.html");
-
-//			 Actions builder1 = new Actions(driver);
-//			 builder1.dragAndDrop(driver.findElement(By.cssSelector("#draggable")),
-//			 driver.findElement(By.cssSelector("#droppable")));
-//			 Thread.sleep(1000);
-//			 Action selectMultiple1 = builder1.build();
-//			 Thread.sleep(1000);
-//			 selectMultiple1.perform();
-//			 Thread.sleep(1000);
-
-			// driver.findElement(By.id("lst-ib")).sendKeys("test automation");
-			// driver.findElement(By.cssSelector("#sblsbb button")).click();
+			WebDriver driver = this.generateWebdriver(ip, browser);
+			driver.get(url);
+			Thread.sleep(2000);
 			if (lstStep == null)
 				return "err";
 			Actions builderMulti = new Actions(driver);
@@ -165,7 +177,7 @@ public class HomeController {
 					if (Helper.trim(step.getAction()).equals("ClickAction")) {
 						builder.click(element);
 					} else if (Helper.trim(step.getAction()).equals("SendKeysAction")) {
-						builder.sendKeys(element, step.getValueEnter());
+						builder.sendKeys(element, step.getValueEnter()).perform();
 					} else if (Helper.trim(step.getAction()).equals("MoveMouseAction")) {
 						builder.moveToElement(element);
 						builder.release(element);
