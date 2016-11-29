@@ -1,1 +1,1 @@
-call java -jar selenium-server-standalone-3.0.1.jar -role hub 
+call java -jar selenium-server-standalone-3.0.1.jar -role hub -browserTimeout 120000 -timeout 120 -cleanUpCycle  5000 -maxSession 5

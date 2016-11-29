@@ -7,15 +7,17 @@
 	http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd">
 
   <!-- connect to database -->
-  <bean id="dataSourceBatch"
+  <bean id="dataSource"
 	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-	<property name="url" value="jdbc:mysql://localhost:3306/interview" />
+	<property name="url" value="jdbc:mysql://localhost:3306/autotest" />
 	<property name="username" value="root" />
 	<property name="password" value="abc123" />
   </bean>
 
-  <bean id="transactionManagerBatch"
+  <bean id="transactionManager"
 	class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
-	
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 </beans>

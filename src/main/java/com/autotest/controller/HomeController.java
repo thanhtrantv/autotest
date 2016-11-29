@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import junit.framework.TestCase;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +24,8 @@ import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -37,6 +42,7 @@ import com.autotest.service.AutoTestService;
 import com.autotest.utils.Helper;
 import com.autotest.vo.StepRunTestCaseVO;
 import com.autotest.vo.StepTestCase;
+import com.autotest.vo.TestCaseVO;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -65,7 +71,41 @@ public class HomeController {
 		return "index";
 
 	}
+	@ResponseBody
+	@RequestMapping(value = "saveTestcase", method = RequestMethod.GET)
+	public String createTestCase(@RequestParam("lstStep") String stepStr, @RequestParam("url") String url,
+			@RequestParam("ip") String ip, @RequestParam("browser") String browser, @RequestParam("name") String name,@RequestParam("desc") String desc) throws MalformedURLException {
+		TestCaseVO testcase=new TestCaseVO();
+		testcase.setLstStep(stepStr);
+		testcase.setTestcaseUrl(url);
+		testcase.setTestcaseIp(ip);
+		testcase.setTestcaseBrowser(browser);
+		testcase.setTestcaseDesc(desc);
+		testcase.setTestcaseName(name);
+		return "ok";
 
+	}
+	
+	private void waitForPageToBeReady(WebDriver driver) 
+	{
+	    JavascriptExecutor js = (JavascriptExecutor)driver;
+
+	    //This loop will rotate for 100 times to check If page Is ready after every 1 second.
+	    //You can replace your if you wants to Increase or decrease wait time.
+	    for (int i=0; i<400; i++)
+	    { 
+	        try 
+	        {
+	            Thread.sleep(1000);
+	        }catch (InterruptedException e) {} 
+	        //To check page ready state.
+
+	        if (js.executeScript("return document.readyState").toString().equals("complete"))
+	        { 
+	            break; 
+	        }   
+	      }
+	 }
 	private WebDriver generateWebdriver(String ipAddress, String browser) {
 		DesiredCapabilities capability = null;
 		WebDriver driver = null;
@@ -99,6 +139,7 @@ public class HomeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		this.waitForPageToBeReady(driver);
 		return driver;
 	}
 
@@ -114,13 +155,16 @@ public class HomeController {
 			});
 			WebDriver driver = this.generateWebdriver(ip, browser);
 			driver.get(url);
-			Thread.sleep(2000);
+			//wating page ready 
+			this.waitForPageToBeReady(driver);
+//			Thread.sleep(2000);
 			if (lstStep == null)
 				return "err";
 			Actions builderMulti = new Actions(driver);
 			boolean multi = false;
 			WebElement actionPrev = null;
 			for (StepTestCase step : lstStep) {
+				this.waitForPageToBeReady(driver);
 				System.out.println(step.getAction());
 				/// find element
 				WebElement element = null;

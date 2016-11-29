@@ -1,5 +1,7 @@
 package com.autotest.service;
 
-public interface AutoTestService {
+import com.autotest.vo.TestCaseVO;
 
+public interface AutoTestService {
+	public void createTestCase(TestCaseVO testcase);
 }

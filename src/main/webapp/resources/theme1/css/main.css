@@ -102,3 +102,19 @@ label{
 div.form-group {
     margin-bottom: 5px;
 }
+.sidenav{
+	height: 100%;
+    display: inline-block;
+    float: left;
+}
+#list-testcase li a{
+	color: #ccc;
+    font-size: 17px;
+}
+#name-testcase{
+	display:inline-block;
+}
+.testcase-detail .buttom-right{
+	float:right;
+	padding-top:20px;
+}

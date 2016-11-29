@@ -36,14 +36,13 @@
       border-radius: 0;
     }
     
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
     
     /* Set gray background color and 100% height */
     .sidenav {
       padding-top: 20px;
       background-color: #294158;
       height: 100%;
+	  min-height: 450px;
     }
     
     /* Set black background color, white text and some padding */
@@ -89,16 +88,17 @@
 <div class="container-fluid text-center">
   <div class="row content">
     <div class="col-sm-2 sidenav">
-      <p><a href="#">Test case 2</a></p>
-      <p><a href="#">Test case 3</a></p>
-      <p><a href="#">Test case 4</a></p>
+		<ul id="list-testcase">
+			
+		</ul>
+		<div class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></div>
     </div>
-    <div class="col-sm-10 text-left">
-      <h1>Test case 1 <button type="button" class="btn btn-primary" id="run-testcase">Run</button></h1>
+    <div class="col-sm-10 text-left testcase-detail">
+      <h1 id="name-testcase">Test case 1 </h1><div class="buttom-right"><button type="button" class="btn btn-primary" id="run-testcase">Run</button> <button type="button" class="btn btn-warning" id="save-testcase">Save</button></div>
       
 	  
 	  <div class="alert alert-info" role="alert">
-		  <textarea  >searching with gooogle!!!</textarea>
+		  <textarea  id="testcase-desc">searching with gooogle!!!</textarea>
 		</div>
 		<div class="col-md-4">
 			<div class="alert alert-warning">
