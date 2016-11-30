@@ -208,11 +208,12 @@ public class HomeController {
 				} else {
 					if (multi) {
 						System.out.println("run multi action!");
-						Thread.sleep(1000);
+//						Thread.sleep(1000);
 						Action selectMultiple = builderMulti.build();
-						Thread.sleep(1000);
+						Thread.sleep(500);
 						selectMultiple.perform();
-						Thread.sleep(1000);
+						this.waitForPageToBeReady(driver);
+//						Thread.sleep(1000);
 						multi = false;
 					}
 
@@ -238,11 +239,12 @@ public class HomeController {
 					}
 					// builder.dragAndDrop(driver.findElement(By.id("div1")),
 					// driver.findElement(By.id("div2")));
-					Thread.sleep(1000);
+					//Thread.sleep(1000);
 					Action selectMultiple = builder.build();
-					Thread.sleep(1000);
+					//Thread.sleep(1000);
 					selectMultiple.perform();
-					Thread.sleep(1000);
+					this.waitForPageToBeReady(driver);
+					//Thread.sleep(1000);
 				}
 			}
 		} catch (Exception e) {

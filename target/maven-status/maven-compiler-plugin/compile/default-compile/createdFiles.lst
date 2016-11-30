@@ -1,8 +1,11 @@
 com\autotest\service\AutoTestService.class
 com\autotest\vo\StepTestCase.class
+com\autotest\vo\TestCaseVO.class
 com\autotest\utils\Helper.class
 com\autotest\dao\AutoTestDAO.class
 com\autotest\vo\StepRunTestCaseVO.class
+com\autotest\dao\BaseDAOImpl.class
+com\autotest\dao\AutoTestDAOImpl$1.class
 com\autotest\controller\HomeController.class
 com\autotest\service\AutoTestServiceImpl.class
 com\autotest\controller\HomeController$1.class
