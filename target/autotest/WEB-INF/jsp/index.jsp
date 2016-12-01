@@ -94,7 +94,7 @@
 		<div class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></div>
     </div>
     <div class="col-sm-10 text-left testcase-detail">
-      <h1 id="name-testcase">Test case 1 </h1><div class="buttom-right"><button type="button" class="btn btn-primary" id="run-testcase">Run</button> <button type="button" class="btn btn-warning" id="save-testcase">Save</button></div>
+      <textarea id="name-testcase">Test case 1 </textarea><div class="buttom-right"><h3 id="testcase-status">Fail</h3><button type="button" class="btn btn-primary" id="run-testcase">Run</button> <button type="button" class="btn btn-warning" id="save-testcase">Save</button></div>
       
 	  
 	  <div class="alert alert-info" role="alert">
@@ -116,9 +116,9 @@
 			<div class="alert alert-warning">
 				<h4><strong>Browser</strong></h4>
 				<form>
-				<input name="browser" type="radio" value="IE">Internet Explore</br>
-				<input name="browser" type="radio" value="chrome">Chrome</br>
-				<input name="browser" type="radio" value="firefox" checked>Firefox</br>
+				<input name="env" type="radio" value="IE">Internet Explore</br>
+				<input name="env" type="radio" value="chrome">Chrome</br>
+				<input name="env" type="radio" value="firefox" checked>Firefox</br>
 				</form>
 			</div>
 		</div>
@@ -482,7 +482,7 @@
 </div>
 
 <footer class="container-fluid text-center">
-  <p>Footer Text</p>
+  <p>COPYRIGHT © 2016 MAGRABBIT, INC</p>
 </footer>
 
 </body>

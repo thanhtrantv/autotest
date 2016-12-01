@@ -1,6 +1,18 @@
 jQuery(document).ready(
 		function($) {
-
+			var lstTestCase;
+			loadTestCase();
+			function loadTestCase(){
+				$.ajax({
+					url : "loadTestcase",
+					type : "GET",
+					contentType : "application/json",
+					success : function(obj) {
+						lstTestCase=JSON.parse(obj);
+						console.log(lstTestCase);
+					}
+				});
+			}
 			$("#sortable").sortable(
 					{
 						placeholder : "ui-state-highlight",
@@ -162,7 +174,13 @@ jQuery(document).ready(
 							data : send,
 
 							success : function(msg) {
-								$('.answer').html(msg);
+								if(msg=='pass'){
+									$('#testcase-status').text("Pass");
+									$('#testcase-status').addClass("pass");
+								}else{
+									$('#testcase-status').text("Fail");
+									$('#testcase-status').removeClass("pass");
+								}
 							}
 						});
 					});

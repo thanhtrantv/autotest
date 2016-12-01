@@ -40,11 +40,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.autotest.service.AutoTestService;
 import com.autotest.utils.Helper;
-import com.autotest.vo.StepRunTestCaseVO;
 import com.autotest.vo.StepTestCase;
 import com.autotest.vo.TestCaseVO;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,14 +51,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class HomeController {
 	@Autowired
 	private AutoTestService autoTestService;
-
-	@ResponseBody
-	@RequestMapping(value = "/getStudent")
-	public String getStudent() throws JsonProcessingException {
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, List<String>> maps = new HashMap<String, List<String>>();
-		return mapper.writeValueAsString(maps);
-	}
 
 	@Autowired
 	ApplicationContext context;
@@ -89,17 +79,15 @@ public class HomeController {
 	private void waitForPageToBeReady(WebDriver driver) 
 	{
 	    JavascriptExecutor js = (JavascriptExecutor)driver;
-
 	    //This loop will rotate for 100 times to check If page Is ready after every 1 second.
 	    //You can replace your if you wants to Increase or decrease wait time.
 	    for (int i=0; i<400; i++)
 	    { 
 	        try 
 	        {
-	            Thread.sleep(1000);
+	            Thread.sleep(500);
 	        }catch (InterruptedException e) {} 
 	        //To check page ready state.
-
 	        if (js.executeScript("return document.readyState").toString().equals("complete"))
 	        { 
 	            break; 
@@ -142,12 +130,19 @@ public class HomeController {
 		this.waitForPageToBeReady(driver);
 		return driver;
 	}
-
+	@ResponseBody
+	@RequestMapping(value = "loadTestcase", method = RequestMethod.GET)
+	public String loadTestcase()throws JsonParseException, JsonMappingException, IOException {
+		List<TestCaseVO> lstTC=this.autoTestService.loadTestCase();
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(lstTC);
+	}
 	@ResponseBody
 	@RequestMapping(value = "runTestcase", method = RequestMethod.GET)
 	public String runTestcase(@RequestParam("lstStep") String stepStr, @RequestParam("url") String url,
 			@RequestParam("ip") String ip, @RequestParam("browser") String browser)
 			throws JsonParseException, JsonMappingException, IOException {
+		String rs="fail";
 		try {
 			System.out.println("IP:"+ip + "    data:" + stepStr);
 			ObjectMapper mapper = new ObjectMapper();
@@ -157,12 +152,10 @@ public class HomeController {
 			driver.get(url);
 			//wating page ready 
 			this.waitForPageToBeReady(driver);
-//			Thread.sleep(2000);
 			if (lstStep == null)
 				return "err";
 			Actions builderMulti = new Actions(driver);
 			boolean multi = false;
-			WebElement actionPrev = null;
 			for (StepTestCase step : lstStep) {
 				this.waitForPageToBeReady(driver);
 				System.out.println(step.getAction());
@@ -193,7 +186,6 @@ public class HomeController {
 						builderMulti.release(element);
 					} else if (Helper.trim(step.getAction()).equals("ClickAndHoldAction")) {
 						builderMulti.clickAndHold(element).pause(500);
-						actionPrev = element;
 					} else if (Helper.trim(step.getAction()).equals("ContextClickAction")) {
 						builderMulti.contextClick(element);
 					} else if (Helper.trim(step.getAction()).equals("KeyUpAction")) {
@@ -208,12 +200,10 @@ public class HomeController {
 				} else {
 					if (multi) {
 						System.out.println("run multi action!");
-//						Thread.sleep(1000);
 						Action selectMultiple = builderMulti.build();
 						Thread.sleep(500);
 						selectMultiple.perform();
 						this.waitForPageToBeReady(driver);
-//						Thread.sleep(1000);
 						multi = false;
 					}
 
@@ -237,21 +227,17 @@ public class HomeController {
 					} else if (Helper.trim(step.getAction()).equals("DoubleClickAction")) {
 						builder.doubleClick(element);
 					}
-					// builder.dragAndDrop(driver.findElement(By.id("div1")),
-					// driver.findElement(By.id("div2")));
-					//Thread.sleep(1000);
 					Action selectMultiple = builder.build();
-					//Thread.sleep(1000);
 					selectMultiple.perform();
 					this.waitForPageToBeReady(driver);
-					//Thread.sleep(1000);
 				}
 			}
+			rs="pass";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		System.out.println("Done!!!");
-		return "ok";
+		return rs;
 	}
 }

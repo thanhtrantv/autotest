@@ -112,9 +112,20 @@ div.form-group {
     font-size: 17px;
 }
 #name-testcase{
-	display:inline-block;
+	display: inline-block;
+    font-size: 30px;
+    width: 50%;
 }
 .testcase-detail .buttom-right{
 	float:right;
 	padding-top:20px;
+}
+#testcase-status{
+	color:red;
+	display: inline-block;
+    padding-right: 20px;
+	
+}
+#testcase-status.pass{
+	color : green;
 }

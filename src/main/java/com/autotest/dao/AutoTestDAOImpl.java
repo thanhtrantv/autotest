@@ -2,10 +2,12 @@ package com.autotest.dao;
 
 import java.sql.Blob;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.autotest.vo.TestCaseVO;
@@ -30,5 +32,25 @@ public class AutoTestDAOImpl extends BaseDAOImpl implements AutoTestDAO{
 				arg0.setBlob(6, blob);
 			}
 		});
+	}
+	public List<TestCaseVO> loadTestCase(){
+		List<TestCaseVO> lst=this.getJdbcTemplate().query("select * from testcase", new RowMapper<TestCaseVO>(){
+
+			@Override
+			public TestCaseVO mapRow(ResultSet rs, int arg1)
+					throws SQLException {
+				TestCaseVO testcase=new TestCaseVO();
+				testcase.setLstStep(new String(rs.getBytes("testcase_step")));
+				testcase.setTestcaseBrowser(rs.getString("testcase_browser"));
+				testcase.setTestcaseIp(rs.getString("testcase_ip"));
+				testcase.setTestcaseUrl(rs.getString("testcase_url"));
+				testcase.setTestcaseDesc(rs.getString("testcase_desc"));
+				testcase.setTestcaseName(rs.getString("testcase_name"));
+				testcase.setTestcaseId(rs.getString("testcase_id"));
+				return testcase;
+			}
+			
+		});
+		return lst;
 	}
 }
