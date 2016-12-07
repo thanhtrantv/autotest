@@ -17,11 +17,17 @@ public class AutoTestServiceImpl implements AutoTestService {
 	public void createTestCase(TestCaseVO testcase) {
 		this.autoTestDAO.createTestCase(testcase);
 	}
-
+	@Override
+	public void saveTestCase(TestCaseVO testcase) {
+		this.autoTestDAO.saveTestCase(testcase);
+	}
 	@Override
 	public List<TestCaseVO> loadTestCase() {
-		// TODO Auto-generated method stub
 		return this.autoTestDAO.loadTestCase();
+	}
+	@Override
+	public TestCaseVO loadTestCaseDetail(int id) {
+		return this.autoTestDAO.loadTestCaseDetail(id);
 	}
 
 }

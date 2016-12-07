@@ -12,8 +12,21 @@ public class TestCaseVO {
 	private String testcaseBrowser;
 	private String testcaseStep;
 	private String lstStep;
+	private String testcaseStatus;
 	
-/**
+	/**
+	 * @return the testcaseStatus
+	 */
+	public String getTestcaseStatus() {
+		return testcaseStatus;
+	}
+	/**
+	 * @param testcaseStatus the testcaseStatus to set
+	 */
+	public void setTestcaseStatus(String testcaseStatus) {
+		this.testcaseStatus = testcaseStatus;
+	}
+	/**
 	 * @return the lstStep
 	 */
 	public String getLstStep() {

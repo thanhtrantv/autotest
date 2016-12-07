@@ -1,6 +1,8 @@
 jQuery(document).ready(
 		function($) {
 			var lstTestCase;
+			
+			$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
 			loadTestCase();
 			function loadTestCase(){
 				$.ajax({
@@ -10,6 +12,65 @@ jQuery(document).ready(
 					success : function(obj) {
 						lstTestCase=JSON.parse(obj);
 						console.log(lstTestCase);
+						$.each(lstTestCase,function(key,value){
+							var statusTC=value.testcaseStatus;
+							$('#list-testcase').append("<li><div class='alert alert-info'> <strong><a href='#' idTC="+value.testcaseId+">"+value.testcaseName+"</a></strong> <button type='button' class='btn btn-info'>Run</button></div></li>");
+							testId++;
+						});
+						$('#name-testcase').attr('testcaseid',lstTestCase[0].testcaseId);
+						loadDetailTestCase();
+						$('.sidenav ul li>div').removeClass('active');
+						$('.sidenav ul li:first-child>div').addClass('active');	
+					}
+				});
+			}
+			function loadDetailTestCase(){
+				$("#sortable").empty();
+				$("#sortable").append('<li class="ui-state-default add-button"><div class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></div></li>');
+				$.ajax({
+					url : "loadTestcaseDetail",
+					type : "GET",
+					data: {
+						id:$('#name-testcase').attr('testcaseid')
+					},
+					contentType : "application/json",
+					success : function(obj) {
+						var testCaseDetail=JSON.parse(obj);
+						//console.log(testCaseDetail);
+						$('#name-testcase').text(testCaseDetail.testcaseName);
+						$('#testcase-desc').text(testCaseDetail.testcaseDesc);
+						$('#url-web').text(testCaseDetail.testcaseUrl);
+						$('#ip-computer').text(testCaseDetail.testcaseIp);
+						$('#browser-tc').find('.'+testCaseDetail.testcaseBrowser).prop('checked',true);
+						$('#testcase-status').text(testCaseDetail.testcaseStatus);
+						//console.log(JSON.parse(testCaseDetail.lstStep));
+						
+						if(testCaseDetail.lstStep!=null ){
+							var lsttc=JSON.parse(testCaseDetail.lstStep);
+							console.log(lsttc);
+							$.each(lsttc,function(key,value){
+								if(key==lsttc.length-1)return;
+								//var li='<li class="ui-state-default"><div class="form-group header-step-label">	<label class="control-label">Step</label><span class="ui-state-default sortable-number" >1</span><span class="glyphicon glyphicon-remove"></span></div>	<div class="col-md-12 show-grid" >			  <div class="header-step">
+								var liStep=$("#data-clone li").clone();
+								$( liStep ).insertBefore($("#sortable li:last-child"));
+								liStep.find('.header-step textarea').text("123");
+								liStep.find('.select-action select').val(value.action);
+								liStep.find('.element-type-action select').val(value.elementType);
+								liStep.find('.element-define-action input').val(value.elementDefine);
+								liStep.find('.value-enter-form input').val(value.valueEnter);
+								
+								$(document).find( "#sortable" ).sortable( "refreshPositions" );
+								var $lis = $(document).find( "#sortable" ).children('li');
+								$lis.each(function() {
+									var $li = $(this);
+									var newVal = $(this).index() + 1;
+									//console.log($(this).children('.sortable-number'));
+									$(this).find('.sortable-number').text(newVal);
+									$(this).find('#item_display_order').val(newVal);
+								});
+							});
+						}
+						
 					}
 				});
 			}
@@ -69,15 +130,15 @@ jQuery(document).ready(
 			});
 			var testId=1;
 			$(document).on('click','.sidenav .btn-default',function(){
-				console.log("xx");
-				$('#list-testcase').append("<li><a href='#'>Test case "+testId+"</a></li>");
+				$('#list-testcase').append("<li><div class='alert alert-info'> <strong><a href='#' idTC="+testId+">Test case "+testId+"</a></strong> <button type='button' class='btn btn-info'>Run</button></div></li>");
 				testId++;
-				
 			});
-			$(document).on('click','.sidenav ul li a',function(){
-				console.log("xx12",$(this).text());
-				
-				$('#name-testcase').text($(this).text());
+			$(document).on('click','.sidenav ul li>div',function(){
+				$('#name-testcase').text($(this).find('a').text());
+				$('#name-testcase').attr('testcaseId',$(this).find('a').attr('idtc'));
+				$('.sidenav ul li>div').removeClass('active');
+				$(this).addClass('active');	
+				loadDetailTestCase();
 			});
 			$(document).on('click','#save-testcase',function(){
 				var listStep = [];
@@ -99,6 +160,7 @@ jQuery(document).ready(
 											'.value-enter-form').find('input')
 											.val();
 									step.combineMultiAction='N';
+									step.desc=$li.find('.header-step textarea').val();
 									if(i==($lis.length-1))
 										step.combineMultiAction='N';
 									console.log(step);
@@ -113,10 +175,11 @@ jQuery(document).ready(
 						// send.url="https://www.google.com/";
 						 send.url=$('#url-web').val();
 						 send.ip=$('#ip-computer').val();
+						 send.id=$('#name-testcase').attr('testcaseid');
 						 send.browser=$('input[name=browser]:checked').val();
-						 send.desc=$('#testcase-desc').text();
-						 send.name=$('#name-testcase').text();
-						// console.log(JSON.parse(listStep))
+						 send.desc=$('#testcase-desc').val();
+						 send.name=$('#name-testcase').val();
+						send.statusTC=$('#testcase-status').val();
 						console.log(send)
 						$.ajax({
 							url : "saveTestcase",

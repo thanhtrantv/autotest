@@ -115,10 +115,10 @@
 		<div class="col-md-4">
 			<div class="alert alert-warning">
 				<h4><strong>Browser</strong></h4>
-				<form>
-				<input name="browser" type="radio" value="IE">Internet Explore</br>
-				<input name="browser" type="radio" value="chrome">Chrome</br>
-				<input name="browser" type="radio" value="firefox" checked>Firefox</br>
+				<form id="browser-tc">
+				<input name="browser" class="IE" type="radio" value="IE">Internet Explore</br>
+				<input name="browser" class="chrome" type="radio" value="chrome">Chrome</br>
+				<input name="browser" class="firefox" type="radio" value="firefox" checked>Firefox</br>
 				</form>
 			</div>
 		</div>
@@ -420,13 +420,13 @@
 			  </div>
 			  <div class="content-step">
 				<form class="form-horizontal"> 
-					<div class="form-group form-group-md multi-action-form"> 
+					<div class="form-group form-group-md multi-action-form" style="display:none;"> 
 						<label class="col-sm-3 control-label" for="formGroupActionInputSmall">Multi/step</label> 
 						<div class="col-sm-9"> 
 							<input class="form-control" id="formGroupActionInputSmall" placeholder="Value enter ..." type="checkbox"> 
 						</div> 
 					</div>  
-					<div class="form-group form-group-md action-form"> 
+					<div class="form-group form-group-md action-form select-action" > 
 						<label class="col-sm-3 control-label" for="formGroupInputLarge">Action</label> 
 						<div class="col-sm-9"> 
 							<select class="form-control"> 
@@ -445,7 +445,7 @@
 					</div> 
 					
 					<div class="wrapper-group">
-						<div class="form-group form-group-md element-type-form"> 
+						<div class="form-group form-group-md element-type-form element-type-action"> 
 							<label class="col-md-3 control-label" for="formGroupInputLarge">Element Type</label> 
 							
 							<div class="col-sm-9"> 
@@ -457,12 +457,12 @@
 								</select>
 							</div> 
 						</div> 
-						<div class="form-group form-group-md element-define-form"> 
+						<div class="form-group form-group-md element-define-form element-define-action"> 
 							<label class="col-sm-3 control-label" for="formGroupInputSmall" >Element define</label> 
 							<div class="col-sm-9"> 
 								<input class="form-control" id="formGroupInputSmall" placeholder="Element define by ..." > 
 							</div> 
-					</div>
+						</div>
 						
 					</div>
 					<div class="form-group form-group-md value-enter-form"> 

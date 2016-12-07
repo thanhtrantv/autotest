@@ -63,8 +63,9 @@ public class HomeController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "saveTestcase", method = RequestMethod.GET)
-	public String createTestCase(@RequestParam("lstStep") String stepStr, @RequestParam("url") String url,
-			@RequestParam("ip") String ip, @RequestParam("browser") String browser, @RequestParam("name") String name,@RequestParam("desc") String desc) throws MalformedURLException {
+	public String saveTestcase(@RequestParam("statusTC") String statusTC,@RequestParam("lstStep") String stepStr, @RequestParam("url") String url,
+			@RequestParam("ip") String ip, @RequestParam("browser") String browser, @RequestParam("name") String name,@RequestParam("desc") String desc,@RequestParam("id") String id) throws MalformedURLException {
+		System.out.println("saving testcase!");
 		TestCaseVO testcase=new TestCaseVO();
 		testcase.setLstStep(stepStr);
 		testcase.setTestcaseUrl(url);
@@ -72,6 +73,9 @@ public class HomeController {
 		testcase.setTestcaseBrowser(browser);
 		testcase.setTestcaseDesc(desc);
 		testcase.setTestcaseName(name);
+		testcase.setTestcaseId(id);
+		testcase.setTestcaseStatus(statusTC);
+		autoTestService.saveTestCase(testcase);
 		return "ok";
 
 	}
@@ -136,6 +140,18 @@ public class HomeController {
 		List<TestCaseVO> lstTC=this.autoTestService.loadTestCase();
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(lstTC);
+	}
+	@ResponseBody
+	@RequestMapping(value = "loadTestcaseDetail", method = RequestMethod.GET)
+	public String loadTestcaseDetail(@RequestParam("id") String id)throws JsonParseException, JsonMappingException, IOException {
+		int idcheck=-1;
+		if(Helper.isInteger(id)){
+			idcheck=Helper.parseStringToInt(id);
+		} 
+		System.out.println(idcheck);
+		TestCaseVO tc=this.autoTestService.loadTestCaseDetail(idcheck);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(tc);
 	}
 	@ResponseBody
 	@RequestMapping(value = "runTestcase", method = RequestMethod.GET)
