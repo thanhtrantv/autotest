@@ -51,21 +51,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class HomeController {
-	public static void main(String[] arg){
-		System.out.print("ok");
-		System.setProperty("webdriver.chrome.driver", "D:\\java\\workspace\\Autotest\\autotest/chromedriver.exe");
-		DesiredCapabilities capability = DesiredCapabilities.chrome();
-		WebDriver driver = new ChromeDriver();
-		driver.get("https://freebitco.in");
-		WebElement element =driver.findElement(By.cssSelector(".login_menu_button"));
-		element.click();
-		WebElement elementlogin =driver.findElement(By.cssSelector("#login_form_btc_address"));
-		elementlogin.sendKeys("thanhtran@magrabbit.com");
-		WebElement elementpass =driver.findElement(By.cssSelector("#login_form_password	"));
-		elementpass.sendKeys("vanthanh@123");
-		WebElement elementbuttonsubmit =driver.findElement(By.cssSelector("#login_button"));
-		elementbuttonsubmit.click();
-	}
+
 	@Autowired
 	private AutoTestService autoTestService;
 
