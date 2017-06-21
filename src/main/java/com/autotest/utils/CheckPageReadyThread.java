@@ -25,15 +25,15 @@ public class CheckPageReadyThread implements Runnable {
     }
 
     public static void main(String[] arg) throws Exception {
-		// CheckPageReadyThread user1 = new CheckPageReadyThread("vanthanh.11tlt@gmail.com", "vanthanh@123", "chrome");
-		//CheckPageReadyThread user2 = new CheckPageReadyThread("thanhtran@magrabbit.com", "vanthanh@123", "firefox");
+		 CheckPageReadyThread user1 = new CheckPageReadyThread("vanthanh.11tlt@gmail.com", "vanthanh@123", "chrome");
+		CheckPageReadyThread user2 = new CheckPageReadyThread("thanhtran@magrabbit.com", "vanthanh@123", "firefox");
 		CheckPageReadyThread user3 = new CheckPageReadyThread("caimegithe@zoho.com", "vanthanh@123", "ie");
 		//CheckPageReadyThread user4 =new CheckPageReadyThread("caimegithe2@prohistory.tk","vanthanh@123");
         //CheckPageReadyThread user5 =new CheckPageReadyThread("lancute847@gmail.com","vanthanh@123");
-		//(new Thread(user1)).start();
+		(new Thread(user1)).start();
 
-		// Thread.sleep(50000);
-		//(new Thread(user2)).start();
+		 Thread.sleep(50000);
+		(new Thread(user2)).start();
         Thread.sleep(50000);
 		(new Thread(user3)).start();
 		//(new Thread(user4)).start();
@@ -58,9 +58,9 @@ public class CheckPageReadyThread implements Runnable {
             DesiredCapabilities capability = DesiredCapabilities.internetExplorer();
             System.setProperty("webdriver.ie.driver",
 					System.getProperty("webdriver.ie.driver", "D:\\autotest\\autotest\\autotest/IEDriverServer.exe"));
-			capability.setCapability("initialBrowserUrl", "https://localhost:9443");
-            capability.setCapability("marionette", false);
-            driver = new InternetExplorerDriver(capability);
+			//capability.setCapability("initialBrowserUrl", "https://localhost:9443");
+           // capability.setCapability("marionette", false);
+            driver = new InternetExplorerDriver();
         }else if (browser.equals("chrome")) {
 			System.setProperty("webdriver.chrome.driver", "D:\\autotest\\autotest\\autotest/chromedriver.exe");
 			DesiredCapabilities capability = DesiredCapabilities.chrome();
